@@ -19,6 +19,9 @@ class HaversineDistanceCalculator
     /* return distance in km */
     public function getDistance()
     {
+        if (!$this->isValid()) {
+            throw new \InvalidArgumentException('All factors must be provided');
+        }
 
         $dlng = ($this->xlng - $this->ylng);
 
@@ -50,12 +53,12 @@ class HaversineDistanceCalculator
     }
 
     protected function isValid()
-    {
-        if ($this->xlat && $this->xlng && $thix->ylat && $this->ylng) {
-            return true;
-        } else {
+    {   
+        if (!$this->xlat || !$this->xlng || !$this->ylat || !$this->ylng) {
             return false;
         }
+
+        return true;
     }
 
     public function getXlat()
